@@ -18,48 +18,55 @@ for (let i = 0; i < animalArray.length; i++) {
     $("#animalButtonDiv").append(animalButton);
 }
 
+// add a click event listener to all animal buttons
 
+$(".animalButt").on("click", function() {
 
-// // declare a constant variable queryURL where we store a Giphy API url
-// const queryURL = "https://api.giphy.com/v1/gifs/search?q=cats&api_key=dc6zaTOxFJmzC&limit=10";
+    // grab the data-animal property from "this" button and store in a variable animal
+    let animal = $(this).attr("data-animal"); 
 
-// // perform an asynchronous HTTP request
+    // declare a variable queryURL where we store a Giphy API url
+    let queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
 
-// $.ajax({
-//     url: queryURL,
-//     method: "GET",
+    // perform an asynchronous HTTP request
+    $.ajax({
+        url: queryURL,
+        method: "GET",
 
-// // After the data comes back from the request...
-// }).then(function(response) {
-//     console.log(response);
-    
-//     // store the data from the AJAX request in the results variable
-//     let results = response.data;
-
-//     // for every item in result...
-
-//     for (let i = 0; i < results.length; i++) {
-//         // dynamically create a div and store
-//         let animalDiv = $("<div>");
+    // After the data comes back from the request...
+    }).then(function(response) {
+        console.log(response);
         
-//         // create a paragraph tag with the result's item rating
-//         let p = $("<p>").text("Rating: " + results[i].rating);
-        
-//         // create and store an image tag
-//         let animalImage = $("<img>");
-//         // setting the src attribute of the animalImage to the url stored 
-//         animalImage.attr("src", results[i].images.fixed_height.url);
+        // store the data from the AJAX request in the results variable
+        let results = response.data;
 
-//         // appending the paragraph and image tag to animalDiv
-//         animalDiv.append(p);
-//         animalDiv.append(animalImage);
-        
-//         // prepend the animalDiv to the HTML page in the #animalGifs element.
-//         $("#animalGifs").prepend(animalDiv);
+        // for every item in result...
 
-//     }
+        for (let i = 0; i < results.length; i++) {
+            // dynamically create a div and store
+            let animalDiv = $("<div>");
+            
+            // create a paragraph tag with the result's item rating
+            let p = $("<p>").text("Rating: " + results[i].rating);
+            
+            // create and store an image tag
+            let animalImage = $("<img>");
+            // setting the src attribute of the animalImage to the url stored 
+            animalImage.attr("src", results[i].images.fixed_height.url);
 
-// });
+            // appending the paragraph and image tag to animalDiv
+            animalDiv.append(p);
+            animalDiv.append(animalImage);
+            
+            // prepend the animalDiv to the HTML page in the #animalGifs element.
+            $("#animalGifs").prepend(animalDiv);
+
+        }
+    });
+});
+
+
+
 
 
 
